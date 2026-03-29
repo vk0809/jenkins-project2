@@ -35,7 +35,7 @@ pipeline {
         }
         stage ('Deploy green') {
             steps {
-                sh 'kubectl apply -f deployment-green.yml'
+                sh 'kubectl apply -f green-deployment.yml'
             }
         }
         stage('wait & verify') {
