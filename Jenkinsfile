@@ -33,6 +33,27 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy green') {
+            steps {
+                sh 'kubectl apply -f deployment-green.yml'
+            }
+        }
+        stage('wait & verify') {
+            steps {
+                
+                sh 'sleep 10'
+                sh 'kubectl rollout status deployment/flask-green'
+                sh 'kubectl get pods'
+            }
+        }
+        stage('Switch Traffic to green') {
+            steps {
+                sh '''
+                sed -i "s/version: blue/version: green/" service.yml
+                kubectl apply -f service.yml
+                '''
+            }
+        }
 
     }
 }

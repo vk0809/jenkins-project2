@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: flask-blue
+  labels:
+    app: flask
+    version: blue
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: flask
+      version: blue
+
+  template:
+    metadata:
+      labels:
+        app: flask
+        version: blue
+
+
+    spec:
+      containers:
+      - name: flask-container
+        image: vk0908/flask-app:v1
+        ports: 
+        - containerPort: 5000
+
